@@ -175,7 +175,6 @@
         const chAgree = document.getElementById('chAgree');
         const agreeMsg = document.getElementById('agreeMsg');
         const submitButton = document.getElementById('submitButton');
-        const loginForm = document.getElementById('loginForm');
 
         // Add event listeners for input blur events
         emailInput.addEventListener('input', validateForm);
@@ -247,12 +246,55 @@
             submitButton.disabled = !(isEmailValid && isMobileValid && isPasswordValid && isCheckboxChecked);
         }
 
-        loginForm.addEventListener('submit', function (event) {
-            if (!validateForm()) {
-                event.preventDefault();
-                alert("Please correct the errors in the form.");
-            }
+        document.getElementById("submitButton").addEventListener("click", function () {
+            alert("Sign In clicked");
         });
+
+        document.getElementById("submitButton").addEventListener("click", check);
+
+        function check() {
+            const isEmailValid = validateEmail();
+            const isMobileValid = validateMobile();
+            const isPasswordValid = validatePassword();
+            const isCheckboxChecked = validateCheckbox();
+
+            if (isEmailValid && isMobileValid) {
+                const emailInput = document.getElementById('email').value;
+                const mobileInput = document.getElementById('mobile').value;
+                const passwordInput = document.getElementById('password').value;
+                localStorage.setItem("email", emailInput);
+            }
+        }
+
+        // Add event listeners for input blur events
+        emailInput.addEventListener('input', handleInput);
+        mobileInput.addEventListener('input', handleInput);
+        passwordInput.addEventListener('input', handleInput);
+        chAgree.addEventListener('change', validateForm);
+
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get values from form inputs
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Store email and password in local storage
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
+            // Optionally, you can clear the form fields after submission
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+
+            // Optionally, you can display a confirmation message
+            alert('Login information saved!');
+        }
+
+        // Add event listener to the form for the submit event
+        document.getElementById('loginForm').addEventListener('submit', handleSubmit);
+
+
     </script>
 </body>
 
