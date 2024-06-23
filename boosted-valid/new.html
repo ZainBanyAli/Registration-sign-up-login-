@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        #specialContent {
+            display: none;
+        }
+
+        .welcome {
+            height: 250px;
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="specialContent">
+        <h2>Welcome Back!</h2>
+        <img src="welcome.jpg" alt="Special Image" class="welcome"><br>
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script>
+        const specialContent = document.getElementById('specialContent');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        logoutBtn.addEventListener('click', handleLogout);
+
+        function handleLogout() {
+            // Clear session storage
+            sessionStorage.clear();
+
+
+            // Redirect to the login page
+            window.location.href = 'login.html'; // Replace with your login page
+        }
+
+        function checkLoginStatus() {
+            const email = sessionStorage.getItem('email');
+            const password = sessionStorage.getItem('password');
+            if (email && password) {
+                specialContent.style.display = 'block';
+            } else {
+                specialContent.style.display = 'none';
+                alert('You are not logged in. Redirecting to login page.');
+                window.location.href = 'login.html'; // Replace with your login page
+            }
+        }
+
+        // Check login status on page load
+        window.onload = checkLoginStatus;
+    </script>
+</body>
+
+</html>
